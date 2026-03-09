@@ -941,6 +941,8 @@ nikto -h https://TARGET -Tuning 123bde -output nikto_results.html -Format html
 
 ## API1:2023 — Broken Object Level Authorization (BOLA)
 
+> **CWE Mapping:** [CWE-285](https://cwe.mitre.org/data/definitions/285.html) (Improper Authorization), [CWE-639](https://cwe.mitre.org/data/definitions/639.html) (Authorization Bypass Through User-Controlled Key)
+
 ### 📖 Description
 Object level authorization is an access control mechanism implemented at the code level to validate that a user can only access objects they have permissions for. Every API endpoint that receives an object ID and performs any action should implement object-level authorization checks.
 
@@ -1045,6 +1047,8 @@ query {
 
 ## API2:2023 — Broken Authentication
 
+> **CWE Mapping:** [CWE-287](https://cwe.mitre.org/data/definitions/287.html) (Improper Authentication), [CWE-307](https://cwe.mitre.org/data/definitions/307.html) (Improper Restriction of Excessive Auth Attempts), [CWE-798](https://cwe.mitre.org/data/definitions/798.html) (Use of Hard-coded Credentials)
+
 ### 📖 Description
 Authentication endpoints and flows are critical assets. An API is vulnerable if it permits credential stuffing, brute force attacks, weak passwords, or mishandles tokens and session management.
 
@@ -1130,6 +1134,8 @@ mutation {
 ---
 
 ## API3:2023 — Broken Object Property Level Authorization
+
+> **CWE Mapping:** [CWE-213](https://cwe.mitre.org/data/definitions/213.html) (Exposure of Sensitive Information Due to Incompatible Policies), [CWE-915](https://cwe.mitre.org/data/definitions/915.html) (Improperly Controlled Modification of Dynamically-Determined Object Attributes)
 
 ### 📖 Description
 This combines the former "Excessive Data Exposure" and "Mass Assignment" vulnerabilities. It addresses cases where users can read sensitive properties they shouldn't access, or write/modify internal properties they shouldn't be able to change.
@@ -1245,6 +1251,8 @@ mutation {
 
 ## API4:2023 — Unrestricted Resource Consumption
 
+> **CWE Mapping:** [CWE-770](https://cwe.mitre.org/data/definitions/770.html) (Allocation of Resources Without Limits or Throttling), [CWE-400](https://cwe.mitre.org/data/definitions/400.html) (Uncontrolled Resource Consumption), [CWE-799](https://cwe.mitre.org/data/definitions/799.html) (Improper Control of Interaction Frequency)
+
 ### 📖 Description
 APIs that don't properly limit resource consumption are vulnerable to denial-of-service attacks and financial abuse. This is especially critical in GraphQL due to native batching and nested query capabilities.
 
@@ -1330,6 +1338,8 @@ POST /graphql
 ---
 
 ## API5:2023 — Broken Function Level Authorization (BFLA)
+
+> **CWE Mapping:** [CWE-285](https://cwe.mitre.org/data/definitions/285.html) (Improper Authorization), [CWE-269](https://cwe.mitre.org/data/definitions/269.html) (Improper Privilege Management)
 
 ### 📖 Description
 BFLA occurs when a user can access API functions/endpoints that should be restricted to other roles or groups. Unlike BOLA (which is about accessing objects), BFLA is about accessing entire functions or operations.
@@ -1422,6 +1432,8 @@ query {
 
 ## API6:2023 — Unrestricted Access to Sensitive Business Flows
 
+> **CWE Mapping:** [CWE-799](https://cwe.mitre.org/data/definitions/799.html) (Improper Control of Interaction Frequency), [CWE-770](https://cwe.mitre.org/data/definitions/770.html) (Allocation of Resources Without Limits), [CWE-841](https://cwe.mitre.org/data/definitions/841.html) (Improper Enforcement of Behavioral Workflow)
+
 ### 📖 Description
 This vulnerability occurs when APIs expose sensitive business flows without appropriate restrictions, allowing automated abuse of purchasing, booking, registration, or other critical workflows.
 
@@ -1459,6 +1471,8 @@ This vulnerability occurs when APIs expose sensitive business flows without appr
 ---
 
 ## API7:2023 — Server Side Request Forgery (SSRF)
+
+> **CWE Mapping:** [CWE-918](https://cwe.mitre.org/data/definitions/918.html) (Server-Side Request Forgery)
 
 ### 📖 Description
 SSRF occurs when an API fetches remote resources without validating user-supplied URLs, enabling attackers to make the server send requests to unintended destinations, including internal services and cloud metadata endpoints.
@@ -1548,6 +1562,8 @@ mutation {
 
 ## API8:2023 — Security Misconfiguration
 
+> **CWE Mapping:** [CWE-16](https://cwe.mitre.org/data/definitions/16.html) (Configuration), [CWE-209](https://cwe.mitre.org/data/definitions/209.html) (Generation of Error Message Containing Sensitive Information), [CWE-942](https://cwe.mitre.org/data/definitions/942.html) (Permissive Cross-domain Policy with Untrusted Domains)
+
 ### 📖 Description
 Security misconfiguration encompasses missing security hardening, improperly configured permissions, unnecessary features enabled, missing TLS, permissive CORS, verbose error messages, and missing security headers.
 
@@ -1593,6 +1609,8 @@ Security misconfiguration encompasses missing security hardening, improperly con
 
 ## API9:2023 — Improper Inventory Management
 
+> **CWE Mapping:** [CWE-1059](https://cwe.mitre.org/data/definitions/1059.html) (Insufficient Technical Documentation)
+
 ### 📖 Description
 This covers risks from running outdated API versions, unpatched endpoints, using deprecated APIs with weaker security, and having unclear data flow documentation with third parties.
 
@@ -1630,6 +1648,8 @@ This covers risks from running outdated API versions, unpatched endpoints, using
 ---
 
 ## API10:2023 — Unsafe Consumption of APIs
+
+> **CWE Mapping:** [CWE-20](https://cwe.mitre.org/data/definitions/20.html) (Improper Input Validation), [CWE-319](https://cwe.mitre.org/data/definitions/319.html) (Cleartext Transmission of Sensitive Information), [CWE-601](https://cwe.mitre.org/data/definitions/601.html) (URL Redirection to Untrusted Site)
 
 ### 📖 Description
 APIs that consume data from third-party APIs often trust that data more than user input, leading to vulnerabilities when third-party services are compromised or return malicious data.
@@ -1753,18 +1773,704 @@ For each vulnerability discovered, document using this template:
 
 ---
 
+## 17. Pre-Engagement & Scoping
+
+### 17.1 Scoping Questionnaire
+
+Before beginning any API security assessment, gather the following information:
+
+| **Category** | **Question** | **Client Response** |
+|---|---|---|
+| **API Type** | Is this a REST API, GraphQL API, or both? | |
+| **Authentication** | What authentication mechanism is used? (OAuth 2.0, JWT, API Key, Basic, SAML) | |
+| **Environments** | Which environments are in scope? (Production, Staging, Dev) | |
+| **Documentation** | Is API documentation available? (Swagger/OpenAPI spec, GraphQL schema) | |
+| **Endpoints Count** | How many API endpoints/operations are in scope? | |
+| **User Roles** | List all user roles (e.g., Admin, Manager, User, Guest) | |
+| **Test Accounts** | Will test accounts be provided for each role? | |
+| **Rate Limiting** | Are there existing rate limits we should be aware of? | |
+| **Third-Party** | Does the API integrate with third-party services? List them. | |
+| **Sensitive Data** | What types of sensitive data does the API handle? (PII, PHI, PCI, etc.) | |
+| **WAF/CDN** | Is there a WAF or CDN in front of the API? (Cloudflare, AWS WAF, etc.) | |
+| **IP Whitelisting** | Do we need IP whitelisting for testing? | |
+| **Testing Window** | Preferred testing window and timezone? | |
+| **Restrictions** | Any actions explicitly prohibited? (e.g., DoS testing, data modification) | |
+| **Contacts** | Emergency contacts for the testing period | |
+
+### 17.2 Rules of Engagement (ROE) Checklist
+
+- [ ] Written authorization signed by an authorized representative
+- [ ] Scope clearly defined — list of in-scope API endpoints/domains
+- [ ] Out-of-scope items explicitly documented
+- [ ] Testing window and hours defined
+- [ ] Emergency contact procedures established
+- [ ] Data handling and NDA requirements confirmed
+- [ ] Incident escalation path defined
+- [ ] Reporting format and deadlines agreed upon
+- [ ] Re-testing / verification process defined
+- [ ] Legal review completed if testing production environment
+
+### 17.3 Test Account Matrix
+
+| **Role** | **Username** | **Permissions** | **Purpose** |
+|---|---|---|---|
+| Super Admin | `admin_test` | Full system access | Baseline for privilege testing |
+| Regular User A | `user_a_test` | Standard user | Primary testing account |
+| Regular User B | `user_b_test` | Standard user | Cross-user BOLA testing |
+| Read-Only User | `readonly_test` | View only | BFLA testing (write attempts) |
+| Unauthenticated | — | None | Test authentication enforcement |
+| API Client | `api_client_test` | Machine-to-machine | API key / service account testing |
+
+---
+
+## 18. Burp Suite Configuration Walkthrough
+
+### 18.1 Initial Proxy Setup for API Testing
+
+```
+📌 IMAGE SUGGESTION: Screenshot of Burp Suite proxy configuration panel
+showing listener on 127.0.0.1:8080, with intercept turned on.
+```
+
+**Step 1: Configure Proxy Listener**
+1. Open Burp Suite → Proxy → Options
+2. Ensure listener is running on `127.0.0.1:8080`
+3. If testing HTTPS APIs, install Burp's CA certificate:
+   - Browse to `http://burp` in your browser
+   - Download and install CA certificate in your browser/OS trust store
+
+**Step 2: Configure Browser/Client**
+```bash
+# For curl — route through Burp proxy
+curl -sk --proxy http://127.0.0.1:8080 https://TARGET/api/v1/users
+
+# For Postman — Settings → Proxy → Add Custom Proxy
+# Address: 127.0.0.1  Port: 8080
+
+# For Python requests
+import requests
+proxies = {"http": "http://127.0.0.1:8080", "https": "http://127.0.0.1:8080"}
+requests.get("https://TARGET/api/v1/users", proxies=proxies, verify=False)
+```
+
+**Step 3: Target Scope Configuration**
+1. Go to Target → Scope → Add
+2. Protocol: `HTTPS`, Host: `api.target.com`, Port: `443`
+3. Enable "Use advanced scope control" for complex rules
+4. Set filter to show only in-scope items
+
+### 18.2 Essential Burp Extensions for API Testing
+
+| **Extension** | **Install Via** | **Purpose** | **How to Use** |
+|---|---|---|---|
+| **Autorize** | BApp Store | Automated authorization testing | Set low-priv cookies → browse as admin → check for bypasses |
+| **InQL** | BApp Store | GraphQL introspection & analysis | Right-click GraphQL request → Send to InQL → Analyze schema |
+| **JSON Web Tokens** | BApp Store | JWT decode/edit in Burp | JWT tab appears automatically on JWT-bearing requests |
+| **Param Miner** | BApp Store | Hidden parameter discovery | Right-click request → Extensions → Param Miner → Guess params |
+| **Turbo Intruder** | BApp Store | High-speed request sending | Right-click → Send to Turbo Intruder → Use race condition script |
+| **Logger++** | BApp Store | Advanced request/response logging | Filter by regex, method, status code for analysis |
+| **Hackvertor** | BApp Store | Encoding/decoding payloads | Use tags: `<@base64>payload<@/base64>` in requests |
+| **Active Scan++** | BApp Store | Enhanced active scanner | Runs automatically with active scans |
+| **Content Type Converter** | BApp Store | Convert between XML/JSON | Right-click → Extensions → Content Type Converter |
+
+### 18.3 Burp Intruder Setup for API Testing
+
+**BOLA/IDOR Testing:**
+1. Capture a request like `GET /api/v1/users/1001/profile`
+2. Right-click → Send to Intruder
+3. Set `1001` as the payload position: `GET /api/v1/users/§1001§/profile`
+4. Payload type: Numbers (sequential) or Simple list (known IDs)
+5. Start attack, filter by response size differences
+
+**Mass Assignment Property Testing:**
+1. Capture a PUT/PATCH request
+2. Send to Intruder
+3. Set position around property names:
+   ```
+   {"name":"test","§role§":"§admin§"}
+   ```
+4. Payload Set 1: Property names (role, isAdmin, verified, etc.)
+5. Payload Set 2: Values (true, admin, 1, etc.)
+6. Attack Type: Cluster Bomb
+
+### 18.4 Burp Repeater Tips for API Testing
+
+- **Compare responses:** Right-click → Send to Comparer (compare user A vs user B responses)
+- **Follow redirects:** Repeater → Settings → Enable "Follow redirections → Always"
+- **Auto-update Content-Length:** Enabled by default, ensures modified payloads work
+- **Change HTTP method:** In Repeater, simply change `GET` to `POST`, `PUT`, `DELETE`, etc.
+- **Add/modify headers:** Directly edit the raw request to add `Authorization`, custom headers
+
+---
+
+## 19. Compliance Mapping
+
+### OWASP API Top 10 → Compliance Framework Mapping
+
+| **OWASP API** | **PCI-DSS v4.0** | **SOC 2 (TSC)** | **ISO 27001:2022** | **NIST 800-53** | **GDPR** |
+|---|---|---|---|---|---|
+| **API1: BOLA** | Req 7.2 (Access Control) | CC6.1 (Logical Access) | A.8.3 (Access Restriction) | AC-3 (Access Enforcement) | Art. 32 (Security of Processing) |
+| **API2: Broken Auth** | Req 8.3 (Strong Auth) | CC6.1, CC6.2 | A.8.5 (Secure Auth) | IA-2 (Identification & Auth) | Art. 32 |
+| **API3: Property Auth** | Req 7.2, 3.4 (Data Protection) | CC6.1 | A.8.3 | AC-3, AC-6 | Art. 25 (Data Protection by Design) |
+| **API4: Resource Consumption** | Req 6.4 (Network Monitoring) | CC6.6, CC7.2 | A.8.6 (Capacity Management) | SC-5 (DoS Protection) | Art. 32 |
+| **API5: BFLA** | Req 7.2 | CC6.1 | A.8.3, A.5.15 | AC-3, AC-6 | Art. 32 |
+| **API6: Business Flow** | Req 6.4 | CC6.6 | A.8.6 | SI-10 (Information Input Validation) | Art. 32 |
+| **API7: SSRF** | Req 6.4, 1.3 | CC6.6 | A.8.20 (Network Security) | SC-7 (Boundary Protection) | Art. 32 |
+| **API8: Misconfiguration** | Req 2.2 (System Config) | CC6.1, CC7.1 | A.8.9 (Config Management) | CM-6 (Configuration Settings) | Art. 32 |
+| **API9: Inventory** | Req 12.5 (Asset Inventory) | CC6.1 | A.5.9 (Inventory of Info Assets) | CM-8 (Info System Component Inventory) | Art. 30 (Records of Processing) |
+| **API10: Unsafe Consumption** | Req 6.3 (Secure Development) | CC6.6, CC9.2 | A.8.21 (Web Service Security) | SA-9 (External Info System Services) | Art. 28 (Processor) |
+
+---
+
+## 20. Python Automation Scripts
+
+### 20.1 Automated BOLA/IDOR Scanner
+
+```python
+#!/usr/bin/env python3
+"""BOLA/IDOR Automated Scanner — Tests if horizontal privilege escalation is possible."""
+import requests
+import json
+import sys
+import urllib3
+urllib3.disable_warnings()
+
+TARGET_BASE = "https://TARGET_API"  # Replace with actual target
+
+# Tokens for two different users
+USER_A_TOKEN = "Bearer <user_a_jwt_token>"
+USER_B_TOKEN = "Bearer <user_b_jwt_token>"
+
+# Endpoints to test — format: (method, path, description)
+# Replace {id} with actual object IDs belonging to User B
+ENDPOINTS = [
+    ("GET",  "/api/v1/users/{id}/profile",      "User Profile"),
+    ("GET",  "/api/v1/users/{id}/orders",        "User Orders"),
+    ("GET",  "/api/v1/documents/{id}",           "Document Access"),
+    ("PUT",  "/api/v1/users/{id}/settings",      "User Settings Update"),
+    ("DELETE", "/api/v1/documents/{id}",         "Document Deletion"),
+]
+
+USER_B_OBJECT_IDS = ["1002", "1003", "1004"]  # IDs belonging to User B
+
+def test_bola():
+    print("="*70)
+    print("BOLA/IDOR AUTOMATED SCANNER")
+    print("="*70)
+    findings = []
+
+    for method, path_template, description in ENDPOINTS:
+        for obj_id in USER_B_OBJECT_IDS:
+            path = path_template.replace("{id}", obj_id)
+            url = f"{TARGET_BASE}{path}"
+            headers = {"Authorization": USER_A_TOKEN, "Content-Type": "application/json"}
+
+            try:
+                if method == "GET":
+                    resp = requests.get(url, headers=headers, verify=False, timeout=10)
+                elif method == "PUT":
+                    resp = requests.put(url, headers=headers, json={"test": "value"}, verify=False, timeout=10)
+                elif method == "DELETE":
+                    resp = requests.delete(url, headers=headers, verify=False, timeout=10)
+                else:
+                    resp = requests.request(method, url, headers=headers, verify=False, timeout=10)
+
+                status = resp.status_code
+                vuln = "🔴 VULNERABLE" if status in [200, 201, 204] else "✅ SECURE"
+
+                print(f"\n{method} {path}")
+                print(f"  Description: {description}")
+                print(f"  Status: {status} → {vuln}")
+
+                if status in [200, 201, 204]:
+                    findings.append({"method": method, "path": path, "status": status, "desc": description})
+                    print(f"  Response Preview: {resp.text[:200]}")
+
+            except requests.exceptions.RequestException as e:
+                print(f"  ❌ Error: {e}")
+
+    print("\n" + "="*70)
+    print(f"SCAN COMPLETE — {len(findings)} potential BOLA findings")
+    print("="*70)
+    for f in findings:
+        print(f"  🔴 {f['method']} {f['path']} → {f['status']}")
+
+    return findings
+
+if __name__ == "__main__":
+    test_bola()
+```
+
+### 20.2 JWT Security Analyzer
+
+```python
+#!/usr/bin/env python3
+"""JWT Security Analyzer — Checks for common JWT vulnerabilities."""
+import base64
+import json
+import sys
+from datetime import datetime
+
+def decode_jwt(token):
+    """Decode JWT without verification (for analysis only)."""
+    parts = token.split('.')
+    if len(parts) != 3:
+        print("❌ Not a valid JWT (expected 3 parts)")
+        return None, None
+
+    def decode_part(part):
+        padding = 4 - len(part) % 4
+        part += '=' * padding
+        return json.loads(base64.urlsafe_b64decode(part))
+
+    try:
+        header = decode_part(parts[0])
+        payload = decode_part(parts[1])
+        return header, payload
+    except Exception as e:
+        print(f"❌ Error decoding: {e}")
+        return None, None
+
+def analyze_jwt(token):
+    print("="*70)
+    print("JWT SECURITY ANALYSIS")
+    print("="*70)
+
+    header, payload = decode_jwt(token)
+    if not header:
+        return
+
+    print(f"\n📋 HEADER: {json.dumps(header, indent=2)}")
+    print(f"\n📋 PAYLOAD: {json.dumps(payload, indent=2)}")
+
+    findings = []
+
+    # Check 1: Algorithm
+    alg = header.get('alg', 'MISSING')
+    print(f"\n🔍 Algorithm: {alg}")
+    if alg == 'none':
+        findings.append("🔴 CRITICAL: alg=none — token has no signature!")
+    elif alg in ['HS256', 'HS384', 'HS512']:
+        findings.append("🟡 INFO: HMAC algorithm — ensure secret is strong (256+ bits)")
+    elif alg in ['RS256', 'RS384', 'RS512']:
+        findings.append("🟡 INFO: RSA algorithm — check for key confusion attacks (RS→HS)")
+
+    # Check 2: Expiration
+    exp = payload.get('exp')
+    if exp:
+        exp_time = datetime.fromtimestamp(exp)
+        now = datetime.now()
+        if exp_time < now:
+            findings.append(f"🟠 WARNING: Token is EXPIRED (exp: {exp_time})")
+        else:
+            delta = exp_time - now
+            if delta.total_seconds() > 86400:  # > 24 hours
+                findings.append(f"🟡 MEDIUM: Long expiration ({delta}) — consider shorter TTL")
+            findings.append(f"✅ Token expires at: {exp_time} (in {delta})")
+    else:
+        findings.append("🔴 CRITICAL: No expiration (exp) claim — token never expires!")
+
+    # Check 3: Issuer
+    if 'iss' not in payload:
+        findings.append("🟡 MEDIUM: No issuer (iss) claim — server should validate issuer")
+
+    # Check 4: Audience
+    if 'aud' not in payload:
+        findings.append("🟡 MEDIUM: No audience (aud) claim — token could be used across services")
+
+    # Check 5: Sensitive data in payload
+    sensitive_keys = ['password', 'secret', 'ssn', 'credit_card', 'creditCard', 'cc_number']
+    for key in payload:
+        if key.lower() in sensitive_keys:
+            findings.append(f"🔴 CRITICAL: Sensitive data '{key}' found in JWT payload!")
+
+    # Check 6: KID header
+    if 'kid' in header:
+        findings.append("🟡 INFO: 'kid' header present — test for kid injection attacks")
+
+    # Check 7: JKU/X5U header
+    if 'jku' in header or 'x5u' in header:
+        findings.append("🟠 HIGH: jku/x5u header present — test for URI manipulation")
+
+    print("\n" + "="*70)
+    print("FINDINGS:")
+    print("="*70)
+    for f in findings:
+        print(f"  {f}")
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: python jwt_analyzer.py <JWT_TOKEN>")
+        sys.exit(1)
+    analyze_jwt(sys.argv[1])
+```
+
+### 20.3 GraphQL Introspection Dumper & Analyzer
+
+```python
+#!/usr/bin/env python3
+"""GraphQL Introspection Dumper — Extracts and analyzes full schema."""
+import requests
+import json
+import sys
+import urllib3
+urllib3.disable_warnings()
+
+TARGET = "https://TARGET/graphql"  # Replace
+
+INTROSPECTION_QUERY = """
+{
+  __schema {
+    queryType { name }
+    mutationType { name }
+    subscriptionType { name }
+    types {
+      name
+      kind
+      description
+      fields {
+        name
+        description
+        args { name type { name kind ofType { name kind } } }
+        type { name kind ofType { name kind } }
+        isDeprecated
+        deprecationReason
+      }
+      inputFields { name type { name kind ofType { name } } }
+      enumValues { name isDeprecated }
+    }
+    directives { name description locations args { name type { name } } }
+  }
+}
+"""
+
+def dump_schema(target, auth_header=None):
+    headers = {"Content-Type": "application/json"}
+    if auth_header:
+        headers["Authorization"] = auth_header
+
+    print(f"🔍 Sending introspection query to: {target}")
+    resp = requests.post(target, json={"query": INTROSPECTION_QUERY},
+                         headers=headers, verify=False, timeout=30)
+
+    if resp.status_code != 200:
+        print(f"❌ Introspection failed: HTTP {resp.status_code}")
+        return None
+
+    data = resp.json()
+    if 'errors' in data:
+        print(f"⚠️ Errors: {data['errors']}")
+        if 'data' not in data or data['data'] is None:
+            print("❌ Introspection is DISABLED (secure configuration)")
+            return None
+
+    schema = data['data']['__schema']
+
+    # Save full schema
+    with open('graphql_schema_dump.json', 'w') as f:
+        json.dump(data, f, indent=2)
+    print("✅ Full schema saved to graphql_schema_dump.json")
+
+    # Analyze
+    print("\n" + "="*70)
+    print("SCHEMA ANALYSIS")
+    print("="*70)
+
+    types = [t for t in schema['types'] if not t['name'].startswith('__')]
+    queries = []
+    mutations = []
+    subscriptions = []
+    deprecated = []
+    sensitive_fields = []
+
+    sensitive_keywords = ['password', 'secret', 'token', 'ssn', 'credit',
+                          'private', 'internal', 'admin', 'hash', 'key', 'salt']
+
+    for t in types:
+        if t.get('fields'):
+            for f in t['fields']:
+                # Check deprecated
+                if f.get('isDeprecated'):
+                    deprecated.append(f"{t['name']}.{f['name']}: {f.get('deprecationReason', 'N/A')}")
+
+                # Check sensitive field names
+                for keyword in sensitive_keywords:
+                    if keyword in f['name'].lower():
+                        sensitive_fields.append(f"{t['name']}.{f['name']}")
+
+    qtype = schema.get('queryType', {}).get('name')
+    mtype = schema.get('mutationType', {}).get('name')
+    stype = schema.get('subscriptionType', {}).get('name')
+
+    for t in types:
+        if t['name'] == qtype and t.get('fields'):
+            queries = [f['name'] for f in t['fields']]
+        if t['name'] == mtype and t.get('fields'):
+            mutations = [f['name'] for f in t['fields']]
+        if t['name'] == stype and t.get('fields'):
+            subscriptions = [f['name'] for f in t['fields']]
+
+    print(f"\n📊 Types: {len(types)}")
+    print(f"📊 Queries: {len(queries)}")
+    for q in queries:
+        print(f"   → {q}")
+    print(f"📊 Mutations: {len(mutations)}")
+    for m in mutations:
+        print(f"   → {m}")
+    print(f"📊 Subscriptions: {len(subscriptions)}")
+    for s in subscriptions:
+        print(f"   → {s}")
+
+    if deprecated:
+        print(f"\n⚠️ DEPRECATED FIELDS ({len(deprecated)}):")
+        for d in deprecated:
+            print(f"   → {d}")
+
+    if sensitive_fields:
+        print(f"\n🔴 POTENTIALLY SENSITIVE FIELDS ({len(sensitive_fields)}):")
+        for sf in sensitive_fields:
+            print(f"   → {sf}")
+
+    return schema
+
+if __name__ == "__main__":
+    target = sys.argv[1] if len(sys.argv) > 1 else TARGET
+    auth = sys.argv[2] if len(sys.argv) > 2 else None
+    dump_schema(target, auth)
+```
+
+### 20.4 API Security Header Checker
+
+```python
+#!/usr/bin/env python3
+"""API Security Header Checker — Validates security headers and configuration."""
+import requests
+import urllib3
+import sys
+urllib3.disable_warnings()
+
+def check_headers(url, auth_token=None):
+    headers = {}
+    if auth_token:
+        headers["Authorization"] = f"Bearer {auth_token}"
+
+    print(f"\n🔍 Checking security headers for: {url}")
+    print("="*70)
+
+    resp = requests.get(url, headers=headers, verify=False, timeout=10, allow_redirects=False)
+    resp_headers = resp.headers
+
+    checks = [
+        ("Strict-Transport-Security", "HSTS", "🔴 HIGH", "Missing HSTS — no HTTPS enforcement"),
+        ("X-Content-Type-Options", "nosniff", "🟡 MEDIUM", "Missing — allows MIME sniffing"),
+        ("X-Frame-Options", "DENY/SAMEORIGIN", "🟡 MEDIUM", "Missing — clickjacking possible"),
+        ("Content-Security-Policy", "CSP", "🟡 MEDIUM", "Missing — no content security policy"),
+        ("X-XSS-Protection", "XSS Protection", "🟢 LOW", "Missing (deprecated but nice to have)"),
+        ("Cache-Control", "Cache Control", "🟠 HIGH", "Missing — sensitive data may be cached"),
+        ("Referrer-Policy", "Referrer Policy", "🟢 LOW", "Missing — referrer info may leak"),
+        ("Permissions-Policy", "Permissions Policy", "🟢 LOW", "Missing — browser features not restricted"),
+    ]
+
+    findings = []
+    for header_name, label, severity, missing_msg in checks:
+        value = resp_headers.get(header_name)
+        if value:
+            print(f"  ✅ {header_name}: {value}")
+        else:
+            print(f"  ❌ {header_name}: MISSING — {severity} — {missing_msg}")
+            findings.append((header_name, severity, missing_msg))
+
+    # Check CORS
+    print("\n🔍 CORS Testing:")
+    cors_resp = requests.get(url, headers={**headers, "Origin": "https://evil-attacker.com"},
+                             verify=False, timeout=10)
+    acao = cors_resp.headers.get("Access-Control-Allow-Origin", "Not Set")
+    acac = cors_resp.headers.get("Access-Control-Allow-Credentials", "Not Set")
+    print(f"  Origin sent: https://evil-attacker.com")
+    print(f"  Access-Control-Allow-Origin: {acao}")
+    print(f"  Access-Control-Allow-Credentials: {acac}")
+    if acao == "*" or acao == "https://evil-attacker.com":
+        findings.append(("CORS", "🔴 HIGH", f"Permissive CORS: reflects arbitrary origin ({acao})"))
+        print(f"  🔴 VULNERABLE — Permissive CORS detected!")
+
+    # Check HTTP (non-TLS)
+    if url.startswith("https://"):
+        http_url = url.replace("https://", "http://", 1)
+        try:
+            http_resp = requests.get(http_url, verify=False, timeout=5, allow_redirects=False)
+            if http_resp.status_code < 400:
+                print(f"\n  🔴 HTTP endpoint accessible: {http_url} → {http_resp.status_code}")
+                findings.append(("TLS", "🔴 HIGH", "API accessible over plain HTTP"))
+        except:
+            print(f"\n  ✅ HTTP endpoint not accessible (good)")
+
+    # Check server info disclosure
+    server = resp_headers.get("Server", "Not disclosed")
+    x_powered = resp_headers.get("X-Powered-By", "Not disclosed")
+    print(f"\n🔍 Server Info Disclosure:")
+    print(f"  Server: {server}")
+    print(f"  X-Powered-By: {x_powered}")
+    if server != "Not disclosed" and len(server) > 3:
+        findings.append(("Server Header", "🟡 MEDIUM", f"Server version disclosed: {server}"))
+
+    print(f"\n{'='*70}")
+    print(f"TOTAL FINDINGS: {len(findings)}")
+    for h, s, m in findings:
+        print(f"  {s} {h}: {m}")
+
+if __name__ == "__main__":
+    check_headers(sys.argv[1] if len(sys.argv) > 1 else "https://TARGET/api/v1")
+```
+
+---
+
+## 21. Evidence Collection Guide
+
+### 21.1 What to Capture for Each Finding
+
+For every vulnerability discovered, collect the following evidence:
+
+| **Evidence Type** | **How to Capture** | **Where to Include** |
+|---|---|---|
+| **HTTP Request** | Burp Suite → Right-click → Copy as curl command | Report — Steps to Reproduce |
+| **HTTP Response** | Burp Suite → Response tab → Select All → Copy | Report — Proof of Concept |
+| **Screenshots** | Burp Suite → screenshot feature or OS screen capture | Report — Visual Evidence |
+| **Video Recording** | OBS / screen recorder during exploitation | Report — Appendix |
+| **Response Headers** | `curl -sk -I` or Burp Response headers tab | Report — Technical Details |
+| **Timing Data** | `curl -sk -o /dev/null -w "%{time_total}"` | Report — Blind vulnerabilities |
+| **GraphQL Schema** | Introspection dump JSON file | Report — Appendix |
+| **JWT Token Analysis** | jwt.io or jwt_tool output | Report — Auth findings |
+| **Burp Project File** | File → Save Project → `.burp` file | Deliverable — Raw Evidence |
+
+### 21.2 Evidence Naming Convention
+
+```
+[Finding_ID]-[OWASP_Category]-[Description]-[Timestamp]
+
+Examples:
+API-2026-001-BOLA-UserProfileIDOR-20260309.png
+API-2026-002-AUTH-JWTAlgNone-20260309.curl
+API-2026-003-SSRF-CloudMetadata-20260309.txt
+```
+
+### 21.3 Burp Suite — Saving Evidence
+
+1. **Save individual requests:** Right-click request → Save item → `.xml` format
+2. **Export as curl:** Right-click → Copy as curl command (Linux/Mac)
+3. **Export scan results:** Target → Issues → Right-click → Report selected issues → HTML
+4. **Save project:** File → Save project as → Include all traffic within scope
+
+### 21.4 Critical Evidence for Each OWASP Category
+
+| **OWASP Category** | **Must-Have Evidence** |
+|---|---|
+| API1 (BOLA) | Request with User A's token accessing User B's object + successful response |
+| API2 (Auth) | Brute force attempt log, manipulated JWT token, expired token acceptance |
+| API3 (Property) | Request/response showing sensitive field exposure or mass assignment success |
+| API4 (Resources) | Log showing sustained requests without 429, or GraphQL deep query success |
+| API5 (BFLA) | Regular user request to admin endpoint with successful (200) response |
+| API6 (Business) | Automated script output showing business flow abuse (e.g., bulk purchases) |
+| API7 (SSRF) | Request with internal URL and response containing internal data/metadata |
+| API8 (Misconfig) | Response headers dump, stack trace screenshot, CORS reflection proof |
+| API9 (Inventory) | Access to deprecated/beta endpoint with weaker controls |
+| API10 (Unsafe) | Proof of unvalidated third-party data being processed (e.g., SQLi via 3rd party) |
+
+---
+
+## 22. CVSS Scoring Quick Reference
+
+### CVSS v3.1 Base Score Components
+
+Use this table to quickly calculate CVSS scores for your findings:
+
+| **Metric** | **Values** |
+|---|---|
+| **Attack Vector (AV)** | Network (N) = 0.85 / Adjacent (A) = 0.62 / Local (L) = 0.55 / Physical (P) = 0.20 |
+| **Attack Complexity (AC)** | Low (L) = 0.77 / High (H) = 0.44 |
+| **Privileges Required (PR)** | None (N) = 0.85 / Low (L) = 0.62 / High (H) = 0.27 |
+| **User Interaction (UI)** | None (N) = 0.85 / Required (R) = 0.62 |
+| **Scope (S)** | Unchanged (U) / Changed (C) |
+| **Confidentiality (C)** | High (H) = 0.56 / Low (L) = 0.22 / None (N) = 0 |
+| **Integrity (I)** | High (H) = 0.56 / Low (L) = 0.22 / None (N) = 0 |
+| **Availability (A)** | High (H) = 0.56 / Low (L) = 0.22 / None (N) = 0 |
+
+### Common API Vulnerability CVSS Scores
+
+| **Finding** | **CVSS Vector** | **Score** |
+|---|---|---|
+| BOLA — Read access to other users' data | AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N | **6.5** (Medium) |
+| BOLA — Full CRUD on other users' data | AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N | **8.1** (High) |
+| JWT alg:none bypass | AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N | **9.1** (Critical) |
+| Brute force — No rate limiting | AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N | **7.5** (High) |
+| Mass assignment — Admin role | AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H | **8.8** (High) |
+| SSRF — Cloud metadata leak | AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N | **8.6** (High) |
+| CORS misconfiguration | AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N | **6.5** (Medium) |
+| GraphQL introspection enabled | AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N | **5.3** (Medium) |
+| Missing security headers | AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N | **5.3** (Medium) |
+| GraphQL DoS via deep nesting | AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H | **7.5** (High) |
+
+> **Calculator:** Use [FIRST CVSS v3.1 Calculator](https://www.first.org/cvss/calculator/3.1) for precise scoring.
+
+---
+
+## 23. Glossary of API Security Terms
+
+| **Term** | **Definition** |
+|---|---|
+| **API** | Application Programming Interface — a set of rules and protocols for building and interacting with software applications |
+| **REST** | Representational State Transfer — an architectural style that uses HTTP methods for CRUD operations on resources identified by URLs |
+| **GraphQL** | A query language for APIs that allows clients to request exactly the data they need via a single endpoint |
+| **BOLA** | Broken Object Level Authorization — when a user can access another user's data objects by manipulating IDs |
+| **BFLA** | Broken Function Level Authorization — when a user can access API functions restricted to other roles |
+| **IDOR** | Insecure Direct Object Reference — a subtype of BOLA where direct references to objects (IDs) are exposed |
+| **JWT** | JSON Web Token — a compact, URL-safe token format used for authentication and information exchange |
+| **OAuth 2.0** | An authorization framework that allows third-party limited access to user accounts |
+| **Introspection** | A GraphQL feature that allows querying the API schema, exposing all types, fields, and operations |
+| **Query Batching** | Sending multiple GraphQL operations in a single HTTP request |
+| **Mass Assignment** | A vulnerability where an attacker sets object properties they shouldn't be able to modify |
+| **Rate Limiting** | Restricting the number of API requests a client can make within a time period |
+| **SSRF** | Server-Side Request Forgery — tricking the server into making requests to unintended internal/external destinations |
+| **CORS** | Cross-Origin Resource Sharing — HTTP headers that control which origins can access API resources |
+| **HSTS** | HTTP Strict Transport Security — a header that forces browsers to use HTTPS only |
+| **WAF** | Web Application Firewall — a security layer that filters and monitors HTTP traffic to/from a web application |
+| **CVSS** | Common Vulnerability Scoring System — a standardized framework for rating the severity of security vulnerabilities |
+| **CWE** | Common Weakness Enumeration — a categorized list of software and hardware weakness types |
+| **Mutation** | A GraphQL operation that modifies server-side data (equivalent to POST/PUT/DELETE in REST) |
+| **Subscription** | A GraphQL operation that maintains a real-time connection for streaming data (typically via WebSocket) |
+| **Resolver** | A function in GraphQL that is responsible for fetching data for a specific field |
+| **Query Depth** | The number of nested levels in a GraphQL query (deep queries can cause DoS) |
+| **Query Complexity** | A score assigned to GraphQL queries based on the computational cost of resolving them |
+| **Alias** | A GraphQL feature that allows renaming fields in the response, enabling multiple calls to the same field |
+| **Fragment** | A reusable unit in GraphQL that shares fields across multiple query operations |
+| **Persisted Queries** | Pre-registered GraphQL queries that prevent arbitrary query execution |
+| **API Gateway** | A server that acts as a single entry point for API requests, handling routing, rate limiting, and authentication |
+| **OpenAPI/Swagger** | A specification for describing REST APIs, including endpoints, request/response formats, and authentication |
+| **Bearer Token** | An authentication token included in the HTTP `Authorization` header, granting the bearer access |
+| **Replay Attack** | Capturing and re-sending a valid request to perform unauthorized actions |
+| **Credential Stuffing** | Using stolen username/password pairs from data breaches to attempt login on other services |
+| **ReDoS** | Regular Expression Denial of Service — crafted input that causes catastrophic regex backtracking |
+| **OOB (Out-of-Band)** | A testing technique where exploits trigger callbacks to an attacker-controlled external server |
+
+---
+
 ## 📚 References
 
 - [OWASP API Security Top 10 — 2023 Edition](https://owasp.org/API-Security/editions/2023/en/0x00-notice/)
 - [OWASP API Security Project](https://owasp.org/www-project-api-security/)
-- [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/)
+- [OWASP Testing Guide v4.2](https://owasp.org/www-project-web-security-testing-guide/)
 - [OWASP Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)
+- [OWASP REST Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html)
+- [OWASP GraphQL Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html)
+- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
 - [GraphQL Security Best Practices](https://graphql.org/learn/security/)
 - [CWE/SANS Top 25 Most Dangerous Software Weaknesses](https://cwe.mitre.org/top25/archive/2023/2023_top25_list.html)
 - [NIST SP 800-95 — Guide to Secure Web Services](https://csrc.nist.gov/publications/detail/sp/800-95/final)
+- [FIRST CVSS v3.1 Calculator](https://www.first.org/cvss/calculator/3.1)
+- [PortSwigger Web Security Academy — API Testing](https://portswigger.net/web-security/api-testing)
+- [HackTricks — API Pentesting](https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/api-pentesting)
 
 ---
 
 **Document End**
-*Version 1.0 — March 2026*
+*Version 1.1 — March 2026*
 *Classification: Confidential*
